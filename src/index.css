@@ -1,5 +1,18 @@
-body {
+* {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: antiquewhite;
+  font-size: 16px;
 }
