@@ -1,7 +1,7 @@
 import * as React from 'react';
 // import * as styles from "./App.scss";
 
-class TodosItem extends React.Component<{
+export class TodosItem extends React.Component<{
   id: number;
   title: string;
   isCompleted: boolean;
@@ -31,4 +31,4 @@ class TodosItem extends React.Component<{
   }
 }
 
-export default TodosItem;
+// export default TodosItem;

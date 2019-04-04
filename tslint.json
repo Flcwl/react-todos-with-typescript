@@ -29,6 +29,7 @@
     ],
     "no-unused-variable": true,
     "indent": ["error", 2],
-    "ordered-imports": false
+    "ordered-imports": false,
+    "object-literal-sort-keys": [false]
   }
 }

@@ -2,9 +2,13 @@ import * as React from 'react';
 import './App.css';
 // import * as styles from "./App.scss";
 import Header from './components/Header';
-import TodosItem from './components/TodosItem';
+import { TodosItem } from './components/TodosItem';
+import TodosForm from './components/TodosForm';
+import { TodosList } from './components/TodosList';
+import { FilterItem } from './components/Footer/index';
 
 class App extends React.Component {
+  public appTitle = "Todos";
 
   public state = {
     item: {
@@ -16,6 +20,23 @@ class App extends React.Component {
       { id: 3, title: 'Work better', isCompleted: false }
     ]
   };
+
+  constructor(props: any) {
+    super(props);
+    this.addItem = this.addItem.bind(this);
+  }
+  public addItem(title :string) {
+
+    console.log(title);
+
+    const updatedItems = [...this.state.items];
+    updatedItems.push({
+      id: this.state.items.length + 1,
+      title,
+      isCompleted: false
+    });
+    this.setState({ items: updatedItems });
+  }
 
   public render() {
     const items = this.state.items.map(item => (
@@ -31,44 +52,18 @@ class App extends React.Component {
 
     return (
       <main className="todo-app">
-        {/* header */}
-        <Header appTitle="todos" />
-        {/* body */}
+        {/* header： 显示title */}
+        <Header appTitle={ this.appTitle } />
+        {/* AddTodoInput： new Todo, 传值到TodoList */}
+        <TodosForm handleValue = {this.addItem}/>
         <section className="main">
-          <div className="clearfix">
-            <div className="toggle-all-box">
-              <input id="toggle-all" className="toggle-all" type="checkbox" />>
-              <label htmlFor="toggle-all" className="toggle-all-label">Mark all as complete</label>
-            </div>
-          </div>
-
-          {/* todo 列表 */}
-          <div className="todo-list">
-            {/* test */}
-            <ul>
-              <li className="todo-item">
-                <input type="checkbox" name="todo" className="toggle" data-todo-id="1" />
-                <label htmlFor="toggle" className="todo-title"> test </label>
-                <a href="javascript:void(0);" className="delete-todo"> x </a>
-                <input type="text" className="edit-todo"/>
-              </li>
-            </ul>
-          </div>
+          {/* TodosList */}
+          <TodosList list={this.state.items}/>
         </section>
-
         {/* footer */}
         <footer className="footer">
-          <ul className="filters">
-            <li>
-              <a className="filter-label seleted all" href="javascript:void(0)">All</a>
-            </li>
-            <li>
-              <a className="filter-label active" href="javascript:void(0)">Active</a>
-            </li>
-            <li>
-              <a className="filter-label completed" href="javascript:void(0)">Completed</a>
-            </li>
-          </ul>
+          {/* FilterItem: 选中高亮、切换导出选中值 */}
+          <FilterItem appTitle="abc"/>
         </footer>
       </main>
     );

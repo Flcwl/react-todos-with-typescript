@@ -12,7 +12,7 @@
     padding: 1rem 0; }
     .todo-app .header h1 {
       font-size: 36px; }
-    .todo-app .header .new-todo {
+    .todo-app .new-todo {
       display: block;
       box-sizing: border-box;
       width: 100%;
