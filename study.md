@@ -17,9 +17,11 @@ no-webpack
 React 如何添加多个className
 https://segmentfault.com/q/1010000005664656
 
-checked => defaultChecked
+checked={boolean}
 https://reactjs.org/docs/dom-elements.html#checked
 https://codepen.io/dsabalete/pen/jAzLpA?editors=0010
+
+defaultChecked 只构建一次
 
 export default error component
 /node_modules/@types/jest-diff/index.d.ts' only in casing.
@@ -47,7 +49,19 @@ https://reactjs.org/docs/accessibility.html#accessible-forms
 
 save css error
  
-编译时改文件名 ts: bug 
+编译时改文件名 ts: bug
 
-export default 任意命名 组件
+export default 任意命名 组件 组件使用
 
+React discourage event delegation
+click only once
+https://blog.cloudboost.io/why-react-discourage-event-delegation-2b5fe3f52bea
+
+good way to set state
+https://www.robinwieruch.de/react-state-array-add-update-remove/
+https://itnext.io/updating-properties-of-an-object-in-react-state-af6260d8e9f5
+
+type interface
+https://itnext.io/how-to-properly-define-state-in-react-components-47544eb4c15d
+
+Q: React 如何保证组件独立? eg: `TodosList` 里面的多个 `TodosItem`

@@ -1,3 +1,21 @@
+# Todos
+
+## Todo app structure
+
+TodoApp
+	- Header
+  - TodosForm
+	- TodosList
+    - MarkItem
+    - TodosItem #1
+		- TodosItem #2
+		  ...
+		- TodosItem #N
+	- TodosFilter
+
+
+# Initial
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

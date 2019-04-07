@@ -19,12 +19,14 @@ export class AddTodosInput extends React.Component<{
 
   public handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     event.persist();
-    if (event.keyCode !== 13) {
+    console.log(typeof (event.target as any).value);
+    const val = (event.target as any).value.trim();
+
+    if (event.keyCode !== 13 || !val) {
       return;
     }
     // console.log(event);
     // event.target === this.input.current
-    const val = (event.target as any).value;
     this.inputRef.current.value = '';
     this.setState({
       title: val

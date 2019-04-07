@@ -12,16 +12,16 @@
     padding: 1rem 0; }
     .todo-app .header h1 {
       font-size: 36px; }
-    .todo-app .new-todo {
-      display: block;
-      box-sizing: border-box;
-      width: 100%;
-      padding: 1rem 1rem 1rem;
-      appearance: none;
-      border: none;
-      outline: none;
-      border-bottom: 1px solid #ddd;
-      font-size: 14px; }
+  .todo-app .new-todo {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem 1rem 1rem;
+    appearance: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px; }
   .todo-app .main {
     position: relative;
     width: 100%; }
@@ -30,6 +30,9 @@
       vertical-align: middle;
       padding: 6px 6px 20px 0;
       color: #78bb78; }
+      .todo-app .main .toggle-all-box .toggle-all {
+        margin: 5px;
+        vertical-align: bottom; }
     .todo-app .main .todo-list {
       width: 100%;
       padding: 8px 40px;
@@ -38,7 +41,7 @@
       .todo-app .main .todo-list .todo-item {
         width: 100%;
         position: relative;
-        padding: 6px 0 0; }
+        padding: 8px 0 0; }
         .todo-app .main .todo-list .todo-item .toggle {
           padding-right: 20px; }
         .todo-app .main .todo-list .todo-item .delete-todo {
