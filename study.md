@@ -65,3 +65,11 @@ type interface
 https://itnext.io/how-to-properly-define-state-in-react-components-47544eb4c15d
 
 Q: React 如何保证组件独立? eg: `TodosList` 里面的多个 `TodosItem`
+A: by key.
+
+How to properly define state type
+https://itnext.io/how-to-properly-define-state-in-react-components-47544eb4c15d
+https://github.com/fi3ework/blog/tree/master/react-typescript-cheatsheet-cn
+
+state init in constructor
+http://varnull.cn/set-state-in-react-component-life-cycle/

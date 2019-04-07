@@ -117,6 +117,24 @@ class TodosApp extends React.Component<{}, IState>  {
     });
   }
 
+  public toggleTodoTitle = (id :number, title :string) => {
+    console.log(title);
+
+    this.setState(preState => {
+      const items = preState.items.map(item => (
+        item.id === id ? {
+          ...item,
+          title
+        } : {
+          ...item
+        }
+      ));
+      return {
+        items
+      };
+    });
+  }
+
   public checkAll = (items: ITodo[]) :boolean => {
     return items.every(item => item.isCompleted);
   }
@@ -172,6 +190,7 @@ class TodosApp extends React.Component<{}, IState>  {
             toggleTodo={this.toggleTodo}
             deleteTodo={this.deleteTodo}
             toggleAllItems={this.toggleAllTodo}
+            toggleTodoTitle={this.toggleTodoTitle}
           />
         </section>
         <footer className="footer">

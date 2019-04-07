@@ -1,3 +1,12 @@
+/*
+ * @Description: localStorage Utils
+ * @Author: Flcwl
+ * @LastEditors: Please set LastEditors
+ * @Date: 2019-04-07 17:49:05
+ * @LastEditTime: 2019-04-07 19:52:44
+ * @ref: https://gist.github.com/ali-master/b36c1fb5e0673107d090cd8a2d6a1f1e
+ */
+
 export const localStore = {
   checkIsSupport() {
     try {

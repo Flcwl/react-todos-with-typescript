@@ -48,15 +48,30 @@
         width: 100%;
         position: relative;
         padding: 8px 0 0;
+        display: flex;
+        align-items: center;
         .toggle {
-          padding-right: 20px;
+          margin-right: 8px;
         }
         .delete-todo {
           position: absolute;
           right: 0px;
         }
         .edit-todo {
-          display: none;
+          box-sizing: border-box;
+          padding: 8px 0;
+          appearance: none;
+          border: none;
+          outline: none;
+          font-size: 14px;
+          color: #999;
+        }
+        .todo-title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 80%;
+          display: inline-block;
         }
       }
     }
@@ -94,4 +109,8 @@
   height: 0;
   clear: both;
   visibility: hidden;
+}
+
+body {
+  min-width: 1226px;
 }

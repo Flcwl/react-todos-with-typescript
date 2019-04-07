@@ -10,9 +10,10 @@ export class TodosList extends React.Component<
     isMarkAll: boolean;
     currentFilter: string;
     list: ITodo[];
-    toggleTodo: (id: number) => void;
-    deleteTodo: (id: number) => void;
-    toggleAllItems: (isSelected: boolean) => void;
+    toggleTodo: (id :number) => void;
+    deleteTodo: (id :number) => void;
+    toggleAllItems: (isSelected :boolean) => void;
+    toggleTodoTitle: (id :number, title :string) => void;
   }>
 > {
 
@@ -52,6 +53,7 @@ export class TodosList extends React.Component<
         isCompleted={item.isCompleted}
         toggleTodo={toggleTodo}
         deleteTodo={deleteTodo}
+        editItem={this.props.toggleTodoTitle}
       />
     ));
     return (
