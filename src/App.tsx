@@ -18,6 +18,7 @@ interface IState {
 class TodosApp extends React.Component<{}, IState>  {
   public appTitle = 'Todos';
   private increaseNum: number;
+  // TODO: if here define, type will be never
   // state = {
   //   isMarkAll: false,
   //   currentFilter: TodosFilters.ALL,
