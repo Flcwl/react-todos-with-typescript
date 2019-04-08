@@ -12,25 +12,26 @@ export class TodosList extends React.Component<
     list: ITodo[];
     toggleTodo: (id :number) => void;
     deleteTodo: (id :number) => void;
-    toggleAllItems: (isSelected :boolean) => void;
+    toggleAllItems: () => void;
     toggleTodoTitle: (id :number, title :string) => void;
   }>
 > {
 
   // public isMarkedAll = false;
-  constructor(props: any) {
+  constructor(props :any) {
     super(props);
     this.handleCheckAll = this.handleCheckAll.bind(this);
   }
 
   public handleCheckAll() {
-    this.props.toggleAllItems(this.props.isMarkAll);
+    this.props.toggleAllItems();
   }
 
   public filterTodos() {
-    console.log(this.props.currentFilter);
+    const filterName = this.props.currentFilter;
+    console.log(filterName);
 
-    switch (this.props.currentFilter) {
+    switch (filterName) {
       case TodosFilters.ACTIVE:
         return this.props.list.filter(item => !item.isCompleted);
       case TodosFilters.COMPLETED:
@@ -41,7 +42,7 @@ export class TodosList extends React.Component<
   }
 
   public render() {
-    const {toggleTodo, deleteTodo} = this.props;
+    const {isMarkAll, toggleTodo, deleteTodo, toggleTodoTitle} = this.props;
     const list = this.filterTodos();
     // TODO: to define a todo interface
     const items = list.map((item: ITodo) => (
@@ -53,20 +54,21 @@ export class TodosList extends React.Component<
         isCompleted={item.isCompleted}
         toggleTodo={toggleTodo}
         deleteTodo={deleteTodo}
-        editItem={this.props.toggleTodoTitle}
+        editItem={toggleTodoTitle}
       />
     ));
+
     return (
       <div>
         <div className="clearfix">
           <div className="toggle-all-box">
-            <input id="toggle-all" className="toggle-all" type="checkbox" checked={this.props.isMarkAll} onChange={this.handleCheckAll} />
-            <label htmlFor="toggle-all" className="toggle-all-label">Mark all as {this.props.isMarkAll ? 'active' : 'complete'}</label>
+            <input id="toggle-all" className="toggle-all" type="checkbox" checked={isMarkAll} onChange={this.handleCheckAll} />
+            <label htmlFor="toggle-all" className="toggle-all-label">Mark all as {isMarkAll ? 'active' : 'complete'}</label>
           </div>
         </div>
         <div className="todo-list">
           <ul>
-            {items}
+            { items }
           </ul>
         </div>
       </div>

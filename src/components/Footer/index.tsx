@@ -4,7 +4,7 @@ import { TodosFilters } from '../../services/todoService';
 import { FilterItem } from '../FilterItem';
 
 export class Footer extends React.Component<{
-  handleFilter: (label: string) => void
+  handleFilter: (label :string) => void
 }> {
 
   // TODO: 多级组件使用该状态，需统一公共管理
@@ -12,36 +12,39 @@ export class Footer extends React.Component<{
     currentFilter: TodosFilters.ALL
   };
 
-  constructor(props: any) {
+  constructor(props :any) {
     // feelBad
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
-
-
-  public handleClick(event: string) {
+  public handleClick(filter :string) {
     // not work
-    // this.currentFilter = event;
+    // this.currentFilter = filter;
 
     // state changed to reRender
     this.setState({
-      currentFilter: event
+      currentFilter: filter
     });
-    this.props.handleFilter(event);
+    this.props.handleFilter(filter);
   }
 
   public render() {
-
     const items = TodosFilters.list.map(item => (
-      <FilterItem key={item.label} isActive={this.state.currentFilter === item.label} label={item.label} handleFilter={this.handleClick} />
+      <FilterItem
+        key={item.label}
+        isActive={this.state.currentFilter === item.label}
+        label={item.label}
+        handleFilter={this.handleClick}
+      />
     ));
+
     console.log(items);
 
     return (
       // TODO: React discourage event delegation
       <ul className="filters">
-        {items}
+        { items }
         {/* <li>
           <a onClick={this.handleClick} className={`filter-label all`} href="javascript:void(0)">All</a>
         </li>

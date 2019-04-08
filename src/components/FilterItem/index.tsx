@@ -5,29 +5,28 @@ export class FilterItem extends React.Component<{
   isActive: boolean;
   label: string;
   // handleFilter: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-  handleFilter: (label: string) => void;
+  handleFilter: (label :string) => void;
 }> {
 
-  public isActiveFilter = false;
-
-  constructor(props: any) {
+  constructor(props :any) {
     // feelBad
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  public handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  public handleClick(event :React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     console.log(event);
     // this.props.handleFilter(event.target);
     this.props.handleFilter(this.props.label);
   }
 
   public render() {
-    console.log(this.props.isActive);
+    const {isActive, label} = this.props;
 
+    console.log(isActive);
     return (
       <li>
-        <a onClick={this.handleClick} className={`filter-label${this.props.isActive ? ' selected' : ''}`} href="javascript:void(0)">{this.props.label}</a>
+        <a onClick={this.handleClick} className={`filter-label${isActive ? ' selected' : ''}`} href="javascript:void(0)">{ label }</a>
       </li>
     );
   }

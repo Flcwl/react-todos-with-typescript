@@ -2,7 +2,7 @@ import * as React from 'react';
 // import * as styles from "./App.scss";
 
 export class AddTodosInput extends React.Component<{
-  handleValue: (title: string) => void
+  handleValue: (title :string) => void
 }> {
 
   public state = {
@@ -17,7 +17,7 @@ export class AddTodosInput extends React.Component<{
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  public handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  public handleKeyDown(event :React.KeyboardEvent<HTMLInputElement>) {
     event.persist();
     console.log(typeof (event.target as any).value);
     const val = (event.target as any).value.trim();
@@ -27,6 +27,8 @@ export class AddTodosInput extends React.Component<{
     }
     // console.log(event);
     // event.target === this.input.current
+
+    // ref
     this.inputRef.current.value = '';
     this.setState({
       title: val
@@ -39,8 +41,14 @@ export class AddTodosInput extends React.Component<{
 
     return (
       <form action="javascript:void(0);" id="new-todo-form">
-        <input ref={this.inputRef} type="text" className="new-todo" placeholder="input your todo."
-        onKeyDown={ this.handleKeyDown } autoFocus={true} />
+        <input
+          ref={this.inputRef}
+          type="text"
+          className="new-todo"
+          placeholder="input your todo."
+          onKeyDown={this.handleKeyDown}
+          autoFocus={true}
+        />
       </form>
     );
   }

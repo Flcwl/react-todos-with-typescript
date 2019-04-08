@@ -3,7 +3,7 @@ import './App.css';
 // import * as styles from "./App.scss";
 import Header from './components/Header';
 import { TodosList } from './components/TodosList';
-import { Footer } from './components/Footer/index';
+import { Footer } from './components/Footer';
 import { ITodo } from './services/todoService';
 import { localStore } from './utils/localStorage';
 import { AddTodosInput } from './components/AddTodosInput/view';
@@ -16,8 +16,8 @@ interface IState {
 }
 
 class TodosApp extends React.Component<{}, IState>  {
-  public appTitle = "Todos";
-  public increaseNum: number;
+  public appTitle = 'Todos';
+  private increaseNum: number;
   // state = {
   //   isMarkAll: false,
   //   currentFilter: TodosFilters.ALL,
@@ -45,10 +45,10 @@ class TodosApp extends React.Component<{}, IState>  {
     this.toggleAllTodo = this.toggleAllTodo.bind(this);
   }
 
-
   public genNextId = () :number => {
     return this.increaseNum++;
   }
+
   public addTodoItem(title :string) {
 
     if(this.state.items.length > 11) {
@@ -74,14 +74,10 @@ class TodosApp extends React.Component<{}, IState>  {
   public toggleTodo(id :number) {
     console.log(id);
 
-    // way1: setState
+    // way2: setState
     // TODO: type to define Interface, but cumbersome
-    this.setState((state: {
-      isMarkAll: boolean,
-      currentFilter :string,
-      items :ITodo[]
-    }) => {
-      const items = state.items.map(item => {
+    this.setState((preState :IState) => {
+      const items = preState.items.map(item => {
         return item.id === id ? {
           ...item,
           isCompleted: !item.isCompleted
@@ -101,13 +97,8 @@ class TodosApp extends React.Component<{}, IState>  {
   public deleteTodo(id :number) {
     console.log(id);
 
-
-    this.setState((state: {
-      isMarkAll: boolean,
-      currentFilter :string,
-      items :ITodo[]
-    }) => {
-      const items = state.items.filter(item =>  item.id !== id);
+    this.setState((preState :IState) => {
+      const items = preState.items.filter(item =>  item.id !== id);
       const isMarkAll = this.checkAll(items);
       console.log(isMarkAll);
       return {
@@ -120,7 +111,7 @@ class TodosApp extends React.Component<{}, IState>  {
   public toggleTodoTitle = (id :number, title :string) => {
     console.log(title);
 
-    this.setState(preState => {
+    this.setState((preState :IState) => {
       const items = preState.items.map(item => (
         item.id === id ? {
           ...item,
@@ -135,22 +126,18 @@ class TodosApp extends React.Component<{}, IState>  {
     });
   }
 
-  public checkAll = (items: ITodo[]) :boolean => {
-    return items.every(item => item.isCompleted);
+  public checkAll = (items :ITodo[]) :boolean => {
+    return items.length > 0 && items.every(item => item.isCompleted);
   }
 
-  public toggleAllTodo(e: boolean) {
-    console.log(e);
+  public toggleAllTodo() {
+    // console.log(e);
     // TODO: state.isMarkAll changed to change state.items
-    this.setState((state: {
-      isMarkAll: boolean,
-      currentFilter :string,
-      items :ITodo[]
-    }) => {
-      const isMarkAll = !state.isMarkAll;
+    this.setState((preState :IState) => {
+      const isMarkAll = !preState.isMarkAll;
       console.log(isMarkAll);
 
-      const items = state.items.map(item => ({
+      const items = preState.items.map(item => ({
         ...item,
         isCompleted: isMarkAll
       }));
@@ -171,28 +158,38 @@ class TodosApp extends React.Component<{}, IState>  {
   }
 
   public render() {
-    console.log("changed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    localStore.set('react-todos-list', this.state.items);
-    localStore.set('react-todos-currentFilter', this.state.currentFilter);
+    const {isMarkAll, currentFilter, items} = this.state;
+
+    console.info(
+      '%c%s',
+      'color: rgb(120, 187, 120); font-size: 24px;',
+      'changed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! local storage. '
+    );
+    localStore.set('react-todos-list', items);
+    localStore.set('react-todos-currentFilter', currentFilter);
     localStore.set('react-todos-increaseNum', this.increaseNum);
+
     return (
       <main className="todo-app">
         {/* header： 显示title */}
-        <Header appTitle={ this.appTitle } />
+        <Header appTitle={this.appTitle} />
+
         {/* AddTodoInput： new Todo, 传值到TodoList */}
         <AddTodosInput handleValue = {this.addTodoItem} />
+
         <section className="main">
           {/* TodosList： 根据currentFilter 过滤todoList结果 */}
           <TodosList
-            isMarkAll={this.state.isMarkAll}
-            currentFilter={this.state.currentFilter}
-            list={this.state.items}
+            isMarkAll={isMarkAll}
+            currentFilter={currentFilter}
+            list={items}
             toggleTodo={this.toggleTodo}
             deleteTodo={this.deleteTodo}
             toggleAllItems={this.toggleAllTodo}
             toggleTodoTitle={this.toggleTodoTitle}
           />
         </section>
+
         <footer className="footer">
           {/* FilterItem: 传入Filter选中值 高亮、切换Filter 导出选中值currentFilter */}
           <Footer handleFilter = {this.toggleFilter} />
