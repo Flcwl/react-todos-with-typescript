@@ -96,6 +96,18 @@
         }
       }
     }
+    .hints {
+      width: 100%;
+      text-align: left;
+      font-size: 9px;
+      margin: 2rem 0;
+      color: darksalmon;
+      .hint {
+        font-size: 75%;
+        font-weight: 300;
+        padding: 4px 8px;
+      }
+    }
   }
 }
 

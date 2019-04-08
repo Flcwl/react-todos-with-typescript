@@ -4,15 +4,21 @@
 
 TodoApp
 	- Header
-  - TodosForm
+  - AddTodosInput
 	- TodosList
     - MarkItem
     - TodosItem #1
 		- TodosItem #2
 		  ...
 		- TodosItem #N
-	- TodosFilter
+	- Foolter
+    - FilterItem #1
+    - FilterItem #2
+    - FilterItem #3
 
+## TODO notation
+
+标明注意点，或者坑点。
 
 # Initial
 

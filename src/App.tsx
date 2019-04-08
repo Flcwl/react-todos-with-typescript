@@ -16,7 +16,7 @@ interface IState {
 }
 
 class TodosApp extends React.Component<{}, IState>  {
-  public appTitle = 'Todos';
+  public appTitle = 'Todos 🎉';
   private increaseNum: number;
   // TODO: if here define, type will be never
   // state = {
@@ -52,7 +52,7 @@ class TodosApp extends React.Component<{}, IState>  {
 
   public addTodoItem(title :string) {
 
-    if(this.state.items.length > 11) {
+    if(this.state.items.length > 8) {
       alert('任务太多啦，请清理！');
       return;
     }
@@ -194,6 +194,16 @@ class TodosApp extends React.Component<{}, IState>  {
         <footer className="footer">
           {/* FilterItem: 传入Filter选中值 高亮、切换Filter 导出选中值currentFilter */}
           <Footer handleFilter = {this.toggleFilter} />
+
+          <div className="hints">
+            <div className="hint-title">
+              <h1>Hints</h1>
+            </div>
+            <div className="hint">
+              <p>→ Hit enter to add new todo.</p>
+              <p>→ Double click todo text to edit.</p>
+            </div>
+          </div>
         </footer>
       </main>
     );

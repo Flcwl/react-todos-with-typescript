@@ -79,6 +79,16 @@
           color: #ddd; }
           .todo-app .footer .filters li a.selected {
             color: #798d50; }
+    .todo-app .footer .hints {
+      width: 100%;
+      text-align: left;
+      font-size: 9px;
+      margin: 2rem 0;
+      color: darksalmon; }
+      .todo-app .footer .hints .hint {
+        font-size: 75%;
+        font-weight: 300;
+        padding: 4px 8px; }
 
 .pink-color {
   color: #ffc0cb; }
