@@ -201,7 +201,7 @@ class TodosApp extends React.Component<{}, IState>  {
             </div>
             <div className="hint">
               <p>→ Hit enter to add new todo.</p>
-              <p>→ Double click todo text to edit.</p>
+              <p>→ Double click undone todo text to edit.</p>
             </div>
           </div>
         </footer>
