@@ -31,3 +31,5 @@ export class FilterItem extends React.Component<{
     );
   }
 }
+
+export default FilterItem;

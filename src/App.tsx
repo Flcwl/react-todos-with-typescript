@@ -1,18 +1,16 @@
 import * as React from 'react';
 import './App.css';
-// import * as styles from "./App.scss";
-import Header from './components/Header';
-import { TodosList } from './components/TodosList';
-import { Footer } from './components/Footer';
+import Footer from './components/Footer';
 import { ITodo } from './services/todoService';
 import { localStore } from './utils/localStorage';
-import { AddTodosInput } from './components/AddTodosInput/view';
+import AddTodosInput from './components/AddTodosInput';
+import Header from './components/Header';
+import TodosList1 from './components/TodosList';
 
 interface IState {
-  // here is state type
   isMarkAll: boolean;
   currentFilter: string;
-  items: ITodo[];
+  todos: ITodo[];
 }
 
 class TodosApp extends React.Component<{}, IState>  {
@@ -22,7 +20,7 @@ class TodosApp extends React.Component<{}, IState>  {
   // state = {
   //   isMarkAll: false,
   //   currentFilter: TodosFilters.ALL,
-  //   items: []
+  //   todos: []
   // };
 
   constructor(props :any) {
@@ -36,7 +34,7 @@ class TodosApp extends React.Component<{}, IState>  {
     this.state = {
       isMarkAll,
       currentFilter: localFilter,
-      items: localTodos
+      todos: localTodos
     };
 
     this.addTodoItem = this.addTodoItem.bind(this);
@@ -52,23 +50,23 @@ class TodosApp extends React.Component<{}, IState>  {
 
   public addTodoItem(title :string) {
 
-    if(this.state.items.length > 8) {
+    if(this.state.todos.length > 8) {
       alert('任务太多啦，请清理！');
       return;
     }
     console.log(title);
 
     // way1: setState
-    const items = [...this.state.items];
-    items.push({
+    const todos = [...this.state.todos];
+    todos.push({
       id:  this.genNextId(),
       title,
       isCompleted: false
     });
-    const isMarkAll = this.checkAll(items);
+    const isMarkAll = this.checkAll(todos);
     this.setState({
       isMarkAll,
-      items
+      todos
     });
   }
 
@@ -78,7 +76,7 @@ class TodosApp extends React.Component<{}, IState>  {
     // way2: setState
     // TODO: type to define Interface, but cumbersome
     this.setState((preState :IState) => {
-      const items = preState.items.map(item => {
+      const todos = preState.todos.map(item => {
         return item.id === id ? {
           ...item,
           isCompleted: !item.isCompleted
@@ -86,11 +84,11 @@ class TodosApp extends React.Component<{}, IState>  {
           ...item
         };
       });
-      const isMarkAll = this.checkAll(items);
+      const isMarkAll = this.checkAll(todos);
       console.log(isMarkAll);
       return {
         isMarkAll,
-        items
+        todos
       };
     });
   }
@@ -99,12 +97,12 @@ class TodosApp extends React.Component<{}, IState>  {
     console.log(id);
 
     this.setState((preState :IState) => {
-      const items = preState.items.filter(item =>  item.id !== id);
-      const isMarkAll = this.checkAll(items);
+      const todos = preState.todos.filter(item =>  item.id !== id);
+      const isMarkAll = this.checkAll(todos);
       console.log(isMarkAll);
       return {
         isMarkAll,
-        items
+        todos
       };
     });
   }
@@ -113,7 +111,7 @@ class TodosApp extends React.Component<{}, IState>  {
     console.log(title);
 
     this.setState((preState :IState) => {
-      const items = preState.items.map(item => (
+      const todos = preState.todos.map(item => (
         item.id === id ? {
           ...item,
           title
@@ -122,31 +120,31 @@ class TodosApp extends React.Component<{}, IState>  {
         }
       ));
       return {
-        items
+        todos
       };
     });
   }
 
-  public checkAll = (items :ITodo[]) :boolean => {
-    return items.length > 0 && items.every(item => item.isCompleted);
+  public checkAll = (todos :ITodo[]) :boolean => {
+    return todos.length > 0 && todos.every(item => item.isCompleted);
   }
 
   public toggleAllTodo() {
     // console.log(e);
-    // TODO: state.isMarkAll changed to change state.items
+    // TODO: state.isMarkAll changed to change state.todos
     this.setState((preState :IState) => {
       const isMarkAll = !preState.isMarkAll;
       console.log(isMarkAll);
 
-      const items = preState.items.map(item => ({
+      const todos = preState.todos.map(item => ({
         ...item,
         isCompleted: isMarkAll
       }));
-      console.log(items);
+      console.log(todos);
 
       return {
         isMarkAll,
-        items
+        todos
       };
     });
   }
@@ -159,14 +157,14 @@ class TodosApp extends React.Component<{}, IState>  {
   }
 
   public render() {
-    const {isMarkAll, currentFilter, items} = this.state;
+    const {isMarkAll, currentFilter, todos} = this.state;
 
     console.info(
       '%c%s',
       'color: rgb(120, 187, 120); font-size: 24px;',
       'changed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! local storage. '
     );
-    localStore.set('react-todos-list', items);
+    localStore.set('react-todos-list', todos);
     localStore.set('react-todos-currentFilter', currentFilter);
     localStore.set('react-todos-increaseNum', this.increaseNum);
 
@@ -180,10 +178,10 @@ class TodosApp extends React.Component<{}, IState>  {
 
         <section className="main">
           {/* TodosList： 根据currentFilter 过滤todoList结果 */}
-          <TodosList
+          <TodosList1
             isMarkAll={isMarkAll}
             currentFilter={currentFilter}
-            list={items}
+            list={todos}
             toggleTodo={this.toggleTodo}
             deleteTodo={this.deleteTodo}
             toggleAllItems={this.toggleAllTodo}
