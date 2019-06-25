@@ -73,3 +73,23 @@ https://github.com/fi3ework/blog/tree/master/react-typescript-cheatsheet-cn
 
 state init in constructor
 http://varnull.cn/set-state-in-react-component-life-cycle/
+
+函数传参 不建议`lambda`表达式
+https://github.com/palantir/tslint-react/issues/96
+
+setState
+updater 函数中接收的 state 和 props 都保证为最新。updater 的返回值会与 state 进行**浅合并**。
+https://zh-hans.reactjs.org/docs/react-component.html#setstate
+
+once Click vs double Click
+
+我们为什么要写`super(props);`
+```
+  constructor(props :any) {
+    // 🔴 这时候还不能使用 `this`
+    // 在 JavaScript 中，super 指代父类的构造函数。ref: https://juejin.im/post/5c04fea5f265da6133565696
+    super(props);
+    // ✅ 现在可以使用 `this` 了
+    this.handleClick = this.handleClick.bind(this);
+  }
+```

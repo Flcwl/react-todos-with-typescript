@@ -4,35 +4,21 @@ export class AddTodosInput extends React.Component<{
   handleValue: (title :string) => void
 }> {
 
-  public state = {
-    title: ''
-  };
-  public inputRef :any;
-
-  constructor(props: any) {
-    // feelBad
-    super(props);
-    this.inputRef = React.createRef();
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
-  public handleKeyDown(event :React.KeyboardEvent<HTMLInputElement>) {
+  /**
+   * 用户输入todo按键处理，回车添加
+   * @param event 按键事件对象
+   */
+  public handleKeyDown = (event :React.KeyboardEvent<HTMLInputElement>) => {
     event.persist();
-    console.log(typeof (event.target as any).value);
-    const val = (event.target as any).value.trim();
+
+    const $Input: any = event.target;
+    const val = $Input.value.trim();
 
     if (event.keyCode !== 13 || !val) {
       return;
     }
-    // console.log(event);
-    // event.target === this.input.current
 
-    // ref
-    this.inputRef.current.value = '';
-    this.setState({
-      title: val
-    });
-
+    $Input.value = '';
     this.props.handleValue(val);
   }
 
@@ -41,7 +27,6 @@ export class AddTodosInput extends React.Component<{
     return (
       <form action="javascript:void(0);" id="new-todo-form">
         <input
-          ref={this.inputRef}
           type="text"
           className="new-todo"
           placeholder="input your todo."
