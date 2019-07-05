@@ -1,11 +1,26 @@
 import * as React from 'react';
 // import * as styles from "./App.scss";
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-export class FilterItem extends React.Component<{
-  isActive: boolean;
-  label: string;
-  handleFilter: (label :string) => void;
-}> {
+import * as actions from '../../stores/actions';
+
+// 将 reducer 中的状态插入到组件的 props 中
+const mapStateToProps = (state: any, ownProps: any): { isActive: boolean, label: string } => ({
+  isActive: state.currentFilter === ownProps.label,
+  ...ownProps
+});
+
+// 将 对应action 插入到组件的 props 中
+const mapDispatcherToProps = (dispatch: Dispatch, ownProps: any) => ({
+    addTodo: (text: string) => dispatch(actions.addTodo(text)),
+    handleFilter: () => dispatch(actions.setCurrentFilter(ownProps.label))
+
+});
+
+export type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
+
+export class FilterItem extends React.Component<ReduxType> {
 
   constructor(props :any) {
     super(props);
@@ -13,7 +28,7 @@ export class FilterItem extends React.Component<{
   }
 
   public handleClick() {
-    this.props.handleFilter(this.props.label);
+    this.props.handleFilter();
   }
 
   public render() {
@@ -32,4 +47,4 @@ export class FilterItem extends React.Component<{
   }
 }
 
-export default FilterItem;
+export const FilterLink = connect(mapStateToProps, mapDispatcherToProps)(FilterItem);

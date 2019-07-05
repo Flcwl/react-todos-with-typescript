@@ -93,3 +93,14 @@ once Click vs double Click
     this.handleClick = this.handleClick.bind(this);
   }
 ```
+
+### typescript
+`npx create-react-app my-app --typescript`
+https://facebook.github.io/create-react-app/docs/adding-typescript
+
+### redux
+`npm install -S redux react-redux @types/react-redux`
+https://github.com/microsoft/TypeScript-React-Starter#installing-redux
+
+### redux state to localstorage
+https://stackoverflow.com/questions/35305661/where-to-write-to-localstorage-in-a-redux-app

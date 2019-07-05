@@ -1,18 +1,30 @@
 import * as React from 'react';
-import { TodosItem } from '../TodosItem';
+// import { TodosItem } from '../TodosItem';
 import { ITodo, TodosFilters } from '../../services/todoService';
 
-export class TodosList extends React.Component<
-  Readonly<{
-    isMarkAll: boolean;
-    currentFilter: string;
-    list: ITodo[];
-    toggleTodo: (idx :number) => void;
-    deleteTodo: (idx :number) => void;
-    toggleAllItems: () => void;
-    toggleTodoTitle: (idx :number, title :string) => void;
-  }>
-> {
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import * as actions from '../../stores/actions';
+// import todos from '../../stores/reducers/todos';
+// import { toggleAllTodos } from '../../stores/actions/index';
+import { TodoItem } from '../TodosItem/index';
+
+const mapStateToProps = (state: any) => ({
+  isMarkAll: state.todos.length > 0 && state.todos.every((item: ITodo) => item.isCompleted),
+  todos: state.todos,
+  currentFilter: state.currentFilter || TodosFilters.ALL
+});
+
+const mapDispatcherToProps = (dispatch: Dispatch) => ({
+  toggleAllTodos: (isMarkAll: boolean) => dispatch(actions.toggleAllTodos(isMarkAll)),
+  toggleTodo: (id: number) => dispatch(actions.toggleTodo(id))
+});
+
+export type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
+
+
+export class TodosList extends React.Component<ReduxType> {
 
   /**
    * 过滤显示todos列表
@@ -21,6 +33,7 @@ export class TodosList extends React.Component<
    */
   public getFilterTodos = () => {
     const filterName = this.props.currentFilter;
+    console.log(filterName);
 
     switch (filterName) {
       case TodosFilters.ACTIVE:
@@ -41,21 +54,17 @@ export class TodosList extends React.Component<
    */
   public filterTodos = (cb?: (item: ITodo) => boolean) => {
     const filteredTodosList: any[] = [];
-    const {list, toggleTodo, deleteTodo, toggleTodoTitle} = this.props;
-    list.forEach((item, index) => {
+    const { todos } = this.props;
+    todos.forEach((todo: any, index: number) => {
       // 也可以使用函数默认参数语法`cb: (item: ITodo) => boolean = item => true`
-      const ret = cb ? cb(item) : true;
+      const ret = cb ? cb(todo) : true;
       if(ret) {
         filteredTodosList.push(
-          <TodosItem
-            key={index}
-            id={index}
-            title={item.title}
-            isCompleted={item.isCompleted}
-            toggleTodo={toggleTodo}
-            deleteTodo={deleteTodo}
-            editItem={toggleTodoTitle}
-          />
+          <TodoItem
+          key={ index }
+          { ...todo}
+          id={index}
+        />
         );
       }
     });
@@ -65,8 +74,10 @@ export class TodosList extends React.Component<
   }
 
   public render() {
-    const {isMarkAll} = this.props;
+    const {isMarkAll, todos} = this.props;
     const filteredTodosList = this.getFilterTodos();
+    console.log(isMarkAll, todos);
+    // const isMarkAll = todos.every((item: ITodo) => item.isCompleted);
 
     return (
       <div>
@@ -77,7 +88,8 @@ export class TodosList extends React.Component<
               className="toggle-all"
               type="checkbox"
               checked={isMarkAll}
-              onChange={this.props.toggleAllItems}
+              // tslint:disable-next-line: jsx-no-lambda
+              onChange={() => this.props.toggleAllTodos(!isMarkAll)}
             />
             <label htmlFor="toggle-all" className="toggle-all-label">
               Mark all as {isMarkAll ? 'active' : 'complete'}
@@ -94,4 +106,4 @@ export class TodosList extends React.Component<
   }
 }
 
-export default TodosList;
+export const VisibleTodosList = connect(mapStateToProps, mapDispatcherToProps)(TodosList);
