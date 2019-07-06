@@ -3,22 +3,32 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../stores/actions';
+import { IStoreState } from '../../stores/types/index';
+
+interface IStateProps {
+  id: number;
+  isCompleted: boolean;
+  title: string;
+}
+
+interface IDispatcherProps {
+  deleteTodo: () => void;
+  toggleTodo: () => void;
+  editTodo: (text: string) => void;
+}
 
 // 将 reducer 中的状态插入到组件的 props 中
-const mapStateToProps = (state: any, ownProps: any): { id: number, isCompleted: boolean, title: string } => ({
+const mapStateToProps = (state: IStoreState, ownProps: IStateProps): IStateProps => ({
   id: ownProps.id,
   isCompleted: ownProps.isCompleted,
   title: ownProps.title
 });
 
 // 将 对应action 插入到组件的 props 中
-const mapDispatcherToProps = (dispatch: Dispatch, ownProps: any) => ({
-    deleteTodo: (id: number) => dispatch(actions.deleteTodo(id)),
+const mapDispatcherToProps = (dispatch: Dispatch, ownProps: IStateProps): IDispatcherProps => ({
+    deleteTodo: () => dispatch(actions.deleteTodo(ownProps.id)),
     toggleTodo: () => dispatch(actions.toggleTodo(ownProps.id)),
     editTodo: (text: string) => dispatch(actions.editTodo(ownProps.id, text))
-
-
-    // editItem: (idx :number, title :string) => void;
 });
 
 export type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
@@ -28,16 +38,6 @@ export class TodosItem extends React.Component<ReduxType> {
   public state = {
     isEditing: false
   };
-
-  public deleteItem = () => {
-    console.log(this.props);
-
-    this.props.deleteTodo(this.props.id);
-  }
-
-  public handleToggle = () => {
-    this.props.toggleTodo();
-  }
 
   public toggleEdit = () => {
     // 已完成：不可编辑
@@ -70,12 +70,13 @@ export class TodosItem extends React.Component<ReduxType> {
     if(!value) {
       return;
     }
+
     this.toggleEdit();
     this.props.editTodo(value);
   }
 
   public render = () => {
-    const { title, isCompleted } = this.props;
+    const { title, isCompleted, deleteTodo, toggleTodo } = this.props;
 
     return (
       <div className="todo-item">
@@ -83,26 +84,26 @@ export class TodosItem extends React.Component<ReduxType> {
           type="checkbox"
           name="todo"
           className="toggle"
-          checked={isCompleted}
-          onChange={this.handleToggle}
+          checked={ isCompleted }
+          onChange={ toggleTodo }
         />
         {
           this.state.isEditing ? (
             <input
               type="text"
-              autoFocus={true}
+              autoFocus={true }
               className="edit-todo"
-              defaultValue={title}
-              onKeyDown={this.handleEditKeyDown}
-              onBlur={this.handleEditBlur}
+              defaultValue={ title }
+              onKeyDown={ this.handleEditKeyDown }
+              onBlur={ this.handleEditBlur }
             />
           ) : (
             <label className="todo-title"
-              style={{textDecoration: isCompleted ? 'line-through' : 'none'}}
-              onDoubleClick={this.toggleEdit}> { title } </label>
+              style={ {textDecoration: isCompleted ? 'line-through' : 'none'} }
+              onDoubleClick={ this.toggleEdit }> { title } </label>
           )
         }
-        <a href="javascript:void(0);" className="delete-todo" onClick={this.deleteItem}> x </a>
+        <a href="javascript:void(0);" className="delete-todo" onClick={ deleteTodo }> x </a>
       </div>
     );
   }

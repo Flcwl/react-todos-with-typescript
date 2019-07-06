@@ -2,13 +2,12 @@ import * as React from 'react';
 import './App.css';
 // Components
 import { Header } from './components/Header';
-import { AddTodo } from './components/AddTodosInput';
-import { VisibleTodosList } from './components/TodosList/index';
-import { FilterLinks } from './components/FilterLinkList/index';
+import AddTodo from './components/AddTodosInput';
+import VisibleTodos from './components/TodosList';
+import { FilterLinkList } from './components/FilterLinkList';
 
 class TodosApp extends React.Component {
   public appTitle = 'Todos 🎉';
-
 
   public render() {
 
@@ -24,11 +23,11 @@ class TodosApp extends React.Component {
 
         <AddTodo />
         <section className="main">
-          <VisibleTodosList />
+          <VisibleTodos />
         </section>
 
         <footer className="footer">
-          <FilterLinks />
+          <FilterLinkList />
           {/* Tips */}
           <div className="hints">
             <div className="hint-title">

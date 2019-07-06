@@ -1,18 +1,16 @@
 // src/types/index.tsx
+export const enum FiltersEnum {
+  ALL= 'ALL',
+  COMPLETED = 'COMPLETED',
+  ACTIVE = 'ACTIVE'
+}
 
 export interface IStoreState {
-  todos: Todo[];
-  currentFilter: VisibilityFilters;
+  todos: ITodo[];
+  currentFilter: FiltersEnum;
 }
 
-export const enum VisibilityFilters {
-  SHOW_ALL= 'all',
-  SHOW_COMPLETED = 'completed',
-  SHOW_ACTIVE = 'active'
-}
-
-export class Todo {
-  public isCompleted: boolean;
-  public id: number;
+export class ITodo {
   public title: string;
+  public isCompleted: boolean;
 }

@@ -3,20 +3,12 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../stores/actions';
-import { Todo } from '../../stores/types';
 
-
-// 将 reducer 中的状态插入到组件的 props 中
-const mapStateToProps = (state: any): { todos: Todo[] } => ({
-  todos: state.todos
-});
-
-// 将 对应action 插入到组件的 props 中
-const mapDispatcherToProps = (dispatch: Dispatch) => ({
+const mapDispatcherToProps = (dispatch: Dispatch): { addTodo: (text: string) => void } => ({
     addTodo: (text: string) => dispatch(actions.addTodo(text))
 });
 
-export type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
+type ReduxType = ReturnType<typeof mapDispatcherToProps>;
 
 export class AddTodosInput extends React.Component<ReduxType> {
 
@@ -39,7 +31,6 @@ export class AddTodosInput extends React.Component<ReduxType> {
   }
 
   public render() {
-    console.log(this.props);
 
     return (
       <form action="javascript:void(0);" id="new-todo-form">
@@ -55,5 +46,4 @@ export class AddTodosInput extends React.Component<ReduxType> {
   }
 }
 
-// 使用 connect 高阶组件对 Counter 进行包裹
-export const AddTodo = connect(mapStateToProps, mapDispatcherToProps)(AddTodosInput);
+export default connect(null, mapDispatcherToProps)(AddTodosInput);

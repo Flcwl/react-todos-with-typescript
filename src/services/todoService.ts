@@ -1,21 +1,21 @@
-export interface ITodo {
-  title: string;
-  isCompleted: boolean;
+import { FiltersEnum } from '../stores/types';
+
+export interface ITodosFilter {
+  label: string;
+  filter: FiltersEnum;
 }
 
-export const TodosFilters = {
-  ALL: 'all',
-  ACTIVE: 'active',
-  COMPLETED: 'completed',
-  list: [
-    {
-      label: 'all'
-    },
-    {
-      label: 'active'
-    },
-    {
-      label: 'completed'
-    }
-  ]
-};
+export const TodosFilters: ITodosFilter[] = [
+  {
+    label: 'All',
+    filter: FiltersEnum.ALL
+  },
+  {
+    label: 'Active',
+    filter: FiltersEnum.ACTIVE
+  },
+  {
+    label: 'Completed',
+    filter: FiltersEnum.COMPLETED
+  }
+];

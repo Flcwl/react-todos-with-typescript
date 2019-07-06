@@ -5,9 +5,9 @@ import { createStore } from 'redux';
 
 import TodosApp from './App';
 import './index.css';
+import { localStore } from './utils/localStorage';
 import rootReducer from './stores/reducers';
 import registerServiceWorker from './registerServiceWorker';
-import { localStore } from './utils/localStorage';
 
 const persistedState = JSON.parse( localStore.get('redux-todos-state') || '{}' );
 const store = createStore(rootReducer, persistedState);
