@@ -24,9 +24,9 @@ export interface IDeleteTodoAction {
 }
 
 export interface IToggleAllTodoAction {
-  isMarkAll: boolean;
   type: TOGGLE_ALL_TODOS;
 }
+
 export interface ISetCurrentFilterAction {
   filter: FiltersEnum;
   type: SET_CURRENT_FILTER;
@@ -55,8 +55,7 @@ export const editTodo = (index: number, text: string): IEditTodoAction => ({
   type: EDIT_TODO
 });
 
-export const toggleAllTodos = (isMarkAll: boolean): IToggleAllTodoAction => ({
-  isMarkAll,
+export const toggleAllTodos = (): IToggleAllTodoAction => ({
   type: TOGGLE_ALL_TODOS
 });
 

@@ -13,8 +13,8 @@ const mapStateToProps = (state: IStoreState): {isMarkAll: boolean, todos: ITodo[
   currentFilter: state.currentFilter || FiltersEnum.ALL
 });
 
-const mapDispatcherToProps = (dispatch: Dispatch): { toggleAllTodos: (isMarkAll: boolean) => void } => ({
-  toggleAllTodos: (isMarkAll: boolean) => dispatch(actions.toggleAllTodos(isMarkAll))
+const mapDispatcherToProps = (dispatch: Dispatch): { toggleAllTodos: () => void } => ({
+  toggleAllTodos: () => dispatch(actions.toggleAllTodos())
 });
 
 type ReduxType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatcherToProps>;
@@ -65,13 +65,8 @@ export class TodosList extends React.Component<ReduxType> {
     return filteredTodosList;
   }
 
-  public handleInputChange = () => {
-    const { isMarkAll, toggleAllTodos } = this.props;
-    toggleAllTodos(!isMarkAll);
-  }
-
   public render() {
-    const { isMarkAll, currentFilter } = this.props;
+    const { isMarkAll, currentFilter, toggleAllTodos } = this.props;
     const filteredTodosList = this.getFilterTodos(currentFilter);
 
     return (
@@ -83,7 +78,7 @@ export class TodosList extends React.Component<ReduxType> {
               className="toggle-all"
               type="checkbox"
               checked={ isMarkAll }
-              onChange={ this.handleInputChange }
+              onChange={ toggleAllTodos }
             />
             <label htmlFor="toggle-all" className="toggle-all-label">
               Mark all as { isMarkAll ? 'active' : 'complete' }

@@ -30,8 +30,9 @@ const todos = (state: ITodo[] = [], action: TodoAction): ITodo[] => {
         idx !== action.index
       );
     case TOGGLE_ALL_TODOS:
+      const isMarkAll = state.length > 0 && state.every((todo: ITodo) => todo.isCompleted);
       return state.map((todo: ITodo): ITodo =>
-        ({...todo, isCompleted: action.isMarkAll})
+        ({...todo, isCompleted: !isMarkAll})
       );
     default:
       return state;
